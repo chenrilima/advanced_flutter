@@ -3,17 +3,29 @@ import 'package:flutter_test/flutter_test.dart';
 class NextEventPlayer {
   final String id;
   final String name;
-  late final String initials;
+  final String initials;
   final bool isConfirmed;
 
-  NextEventPlayer({
+  NextEventPlayer._({
     required this.id,
     required this.name,
+    required this.initials,
     required this.isConfirmed,
-  }) {
-    initials = _getInitials();
-  }
-  String _getInitials() {
+  });
+
+  factory NextEventPlayer({
+    required String id,
+    required String name,
+    required bool isConfirmed,
+  }) =>
+      NextEventPlayer._(
+        id: id,
+        name: name,
+        isConfirmed: isConfirmed,
+        initials: _getInitials(name),
+      );
+
+  static String _getInitials(String name) {
     final names = name.split(' ');
     final firstChar = names.first[0];
     final lastChar = names.last[0];
