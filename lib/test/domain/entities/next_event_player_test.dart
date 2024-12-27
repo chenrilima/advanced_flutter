@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 class NextEventPlayer {
   final String id;
   final String name;
-
   final bool isConfirmed;
 
   NextEventPlayer({
@@ -20,26 +19,14 @@ class NextEventPlayer {
 }
 
 void main() {
+  makeSut(String name) => NextEventPlayer(
+        id: '',
+        name: name,
+        isConfirmed: true,
+      );
   test('should return the first letter of the first and last names', () async {
-    final player = NextEventPlayer(
-      id: '',
-      name: 'Carlos Henrique',
-      isConfirmed: true,
-    );
-    expect(player.getInitials(), 'CH');
-
-    final player2 = NextEventPlayer(
-      id: '',
-      name: 'Mayara Silva',
-      isConfirmed: true,
-    );
-    expect(player2.getInitials(), 'MS');
-
-    final player3 = NextEventPlayer(
-      id: '',
-      name: 'Julia Gabriella Lima Dias',
-      isConfirmed: true,
-    );
-    expect(player3.getInitials(), 'JD');
+    expect(makeSut('Carlos Henrique').getInitials(), 'CH');
+    expect(makeSut('Mayara Gomes da Silva').getInitials(), 'MS');
+    expect(makeSut('Julia Gabriella Lima Dias').getInitials(), 'JD');
   });
 }
