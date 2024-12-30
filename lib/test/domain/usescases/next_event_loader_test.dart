@@ -16,7 +16,7 @@ abstract class LoadNextEventRepository {
   Future<void> loadNextEvent({required String groupId});
 }
 
-class LoadNextEvenMockRepository implements LoadNextEventRepository {
+class LoadNextEventMockRepository implements LoadNextEventRepository {
   String? groupId;
   var callsCount = 0;
 
@@ -29,18 +29,19 @@ class LoadNextEvenMockRepository implements LoadNextEventRepository {
 
 void main() {
   late String groupId;
-  late LoadNextEvenMockRepository repo;
+  late LoadNextEventMockRepository repo;
   late NextEventLoader sut;
 
   setUp(() {
+    // arrange
     groupId = Random().nextInt(50000).toString();
-    repo = LoadNextEvenMockRepository();
+    repo = LoadNextEventMockRepository();
     sut = NextEventLoader(repo: repo);
   });
 
   test('should load event data from a repository', () async {
-    await sut(groupId: groupId);
-    expect(repo.groupId, groupId);
+    await sut(groupId: groupId); // act
+    expect(repo.groupId, groupId); // assert
     expect(repo.callsCount, 1);
   });
 }
