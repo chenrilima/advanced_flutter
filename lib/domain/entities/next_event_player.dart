@@ -3,24 +3,27 @@ class NextEventPlayer {
   final String name;
   final String initials;
   final bool isConfirmed;
+  final DateTime date;
 
-  NextEventPlayer._({
-    required this.id,
-    required this.name,
-    required this.initials,
-    required this.isConfirmed,
-  });
+  NextEventPlayer._(
+      {required this.id,
+      required this.name,
+      required this.initials,
+      required this.isConfirmed,
+      required this.date});
 
   factory NextEventPlayer({
     required String id,
     required String name,
     required bool isConfirmed,
+    required DateTime confirmationDate,
   }) =>
       NextEventPlayer._(
         id: id,
         name: name,
         isConfirmed: isConfirmed,
         initials: _getInitials(name),
+        date: DateTime.now(),
       );
 
   static String _getInitials(String name) {
