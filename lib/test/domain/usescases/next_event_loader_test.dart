@@ -4,6 +4,7 @@ import 'package:advanced_flutter/domain/entities/next_event_player.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class NextEvent {
+  // usecase
   final String groupName;
   late final DateTime date;
   final List<NextEventPlayer> players;
@@ -30,11 +31,13 @@ class LoadNextEventSpyRepository implements LoadNextEventRepository {
   String? groupId;
   var callsCount = 0;
   NextEvent? output;
+  Error? error;
 
   @override
   Future<NextEvent> loadNextEvent({required String groupId}) async {
     this.groupId = groupId;
     callsCount++;
+    if (error != null) throw error!;
     return output!;
   }
 }
@@ -85,5 +88,11 @@ void main() {
     expect(event.players[1].name, repo.output?.players[1].name);
     expect(event.players[1].isConfirmed, repo.output?.players[1].isConfirmed);
     expect(event.players[1].initials, isNotEmpty);
+  });
+  test('should return event data on sucess', () async {
+    final error = Error();
+    repo.error = error;
+    final future = sut(groupId: groupId);
+    expect(future, throwsA(error));
   });
 }
