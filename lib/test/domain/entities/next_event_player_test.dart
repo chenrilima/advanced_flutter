@@ -7,6 +7,7 @@ void main() {
         id: '',
         name: name,
         isConfirmed: true,
+        confirmationDate: DateTime.now(),
       ).initials;
   test('should return the first letter of the first and last names', () async {
     expect(initialsOf('Carlos Henrique'), 'CH');
