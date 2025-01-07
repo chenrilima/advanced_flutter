@@ -1,10 +1,11 @@
-import 'dart:math';
-
 import 'package:advanced_flutter/domain/entities/next_event.dart';
 import 'package:advanced_flutter/domain/entities/next_event_player.dart';
 import 'package:advanced_flutter/domain/repositories/load_next_event_repo.dart';
 import 'package:advanced_flutter/domain/usecases/next_event_loader.dart';
+
 import 'package:flutter_test/flutter_test.dart';
+
+import 'package:advanced_flutter/test/helpers/fakes.dart';
 
 class LoadNextEventSpyRepository implements LoadNextEventRepository {
   String? groupId;
@@ -28,7 +29,7 @@ void main() {
 
   setUp(() {
     // arrange
-    groupId = Random().nextInt(50000).toString();
+    groupId = anyString();
     repo = LoadNextEventSpyRepository();
     repo.output =
         NextEvent(groupName: 'any group name', date: DateTime.now(), players: [
