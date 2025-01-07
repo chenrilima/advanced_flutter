@@ -16,3 +16,11 @@
 -   Se o nome estiver vazio, mostrar um hífen (-) nas iniciais
 -   Ignorar espaços em branco, no final, no início ou entre os nomes
 -   Sempre mostrar as iniciais em maiúsculo
+
+# API
+
+-   GET para a rota https://domain.com/api/groups/:groupId/next_event
+-   Enviar Headers "content-type" e "accept", ambos com valor "application/json"
+-   Retornar Unexcpected Error em caso de 400, 403, 404 e 500
+-   Retornar Session Expired Error em caso de 401
+-   Retornar dados do evento em caso de 200
