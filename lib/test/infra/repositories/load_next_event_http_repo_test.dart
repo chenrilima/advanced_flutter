@@ -10,7 +10,9 @@ import 'package:http/http.dart';
 
 import 'package:advanced_flutter/test/helpers/fakes.dart';
 
-class LoadNextEventHttpRepository {
+import '../../../domain/repositories/load_next_event_repo.dart';
+
+class LoadNextEventHttpRepository implements LoadNextEventRepository {
   final Client httpClient;
   final String url;
 
