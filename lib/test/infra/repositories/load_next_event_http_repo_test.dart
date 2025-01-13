@@ -12,7 +12,7 @@ import 'package:advanced_flutter/test/helpers/fakes.dart';
 
 import '../../../domain/repositories/load_next_event_repo.dart';
 
-enum DomainError { unexpected }
+enum DomainError { unexpected, sessionExpired }
 
 class LoadNextEventHttpRepository implements LoadNextEventRepository {
   final Client httpClient;
@@ -32,6 +32,8 @@ class LoadNextEventHttpRepository implements LoadNextEventRepository {
     final response = await httpClient.get(uri, headers: headers);
     if (response.statusCode == 400) {
       throw DomainError.unexpected;
+    } else if (response.statusCode == 401) {
+      throw DomainError.sessionExpired;
     } else if (response.statusCode == 403) {
       throw DomainError.unexpected;
     } else if (response.statusCode == 404) {
@@ -197,6 +199,12 @@ void main() {
     expect(future, throwsA(DomainError.unexpected));
   });
 
+  test('Should throw SessionExpiredError on 401', () async {
+    httpClient.statusCode = 401;
+    final future = sut.loadNextEvent(groupId: groupId);
+    expect(future, throwsA(DomainError.sessionExpired));
+  });
+
   test('Should throw UnexpectedError on 403', () async {
     httpClient.statusCode = 403;
     final future = sut.loadNextEvent(groupId: groupId);
@@ -209,7 +217,7 @@ void main() {
     expect(future, throwsA(DomainError.unexpected));
   });
 
-  test('Should throw UnexpectedError on 404', () async {
+  test('Should throw UnexpectedError on 500', () async {
     httpClient.statusCode = 500;
     final future = sut.loadNextEvent(groupId: groupId);
     expect(future, throwsA(DomainError.unexpected));
